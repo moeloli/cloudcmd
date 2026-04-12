@@ -61,6 +61,7 @@ RUN echo "> remove user" && \
     echo "> configure bash" && \
     echo "alias ls='ls --color=auto'" >> /etc/bash.bashrc && \
     echo "alias buni='bun i --no-save'" >> /etc/bash.bashrc && \
+    echo "alias ghci='ghc --interactive'" >> /etc/bash.bashrc && \
     echo "alias bat='batcat'" >> /etc/bash.bashrc && \
     echo ". /usr/local/src/nvm/nvm.sh" >> /etc/bash.bashrc && \
     echo 'PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> /etc/bash.bashrc && \
