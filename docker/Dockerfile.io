@@ -3,11 +3,11 @@ FROM ubuntu:resolute
 LABEL maintainer="Coderaiser"
 LABEL org.opencontainers.image.source="https://github.com/coderaiser/cloudcmd"
 
-RUN mkdir -p /usr/src/cloudcmd
+RUN mkdir -p /usr/local/share/cloudcmd
 
-WORKDIR /usr/src/cloudcmd
+WORKDIR /usr/local/share/cloudcmd
 
-COPY package.json /usr/src/cloudcmd/
+COPY package.json /usr/local/share/cloudcmd/
 
 ENV DEBIAN_FRONTEND=noninteractive \
     NVM_DIR=/usr/local/share/nvm \
@@ -58,6 +58,9 @@ RUN echo "> remove user" && \
     bun r gritty --omit dev && \
     bun i gritty --omit dev && \
     bun pm cache rm && \
+    echo "> setup cloudcmd" && \
+    ln -s /usr/local/share/cloudcmd/bin/cloudcmd.js /usr/local/bin/cloudcmd && \
+    cloudcmd --vim --save --no-server && \
     echo "> setup git" && \
     git config --global core.whitespace -trailing-space && \
     git config --global pull.rebase true && \
@@ -81,7 +84,7 @@ RUN echo "> remove user" && \
     echo "el_GR.UTF-8 UTF-8" >> /etc/locale.gen && \
     locale-gen
 
-COPY . /usr/src/cloudcmd
+COPY . /usr/local/share/cloudcmd
 
 WORKDIR /
 
@@ -101,4 +104,4 @@ ENV cloudcmd_terminal=true \
 
 EXPOSE 8000
 
-ENTRYPOINT ["/usr/src/cloudcmd/bin/cloudcmd.js"]
+ENTRYPOINT ["/usr/local/share/cloudcmd/bin/cloudcmd.js"]
